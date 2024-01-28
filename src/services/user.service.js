@@ -10,6 +10,8 @@ export const getAllUsers = async () => {
 
 //create new user
 export const newUser = async (body) => {
+  const hash = await bcrypt.hash(body.password,10)
+  body.password = hash
   const data = await User.create(body);
   return data;
 };
@@ -33,4 +35,25 @@ export const deleteUser = async (id) => {
   await User.findByIdAndDelete(id);
   return '';
 };
+
+//get single user
+export const getUser = async (body) => {
+  try {
+    const data = await User.findOne({ email_id: body.email_id });
+    if (!data) {
+      return "User not found";
+    }
+    const ismatch = await bcrypt.compare(body.password, data.password);
+    console.log(ismatch);
+
+    if (ismatch) {
+      return "Authentication Successful";
+    } else {
+      return "Authentication Failed";
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 
