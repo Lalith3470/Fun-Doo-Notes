@@ -10,10 +10,26 @@ export const getAllUsers = async () => {
 
 //create new user
 export const newUser = async (body) => {
-  const hash = await bcrypt.hash(body.password,10)
-  body.password = hash
-  const data = await User.create(body);
-  return data;
+  try {
+    const existingUser = await User.findOne({ email_id: body.email_id });
+
+    if (existingUser) {
+      const isPasswordMatch = await bcrypt.compare(body.password, existingUser.password);
+
+      if (isPasswordMatch) {
+        return "User already exists, and password matches.";
+      } else {
+        return "User already exists, but password does not match.";
+      }
+    } else {
+      const hash = await bcrypt.hash(body.password, 10);
+      body.password = hash;
+      const newUser = await User.create(body);
+      return "New user created successfully.";
+    }
+  } catch (error) {
+    return error;
+  }
 };
 
 //update single user

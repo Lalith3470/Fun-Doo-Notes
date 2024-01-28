@@ -8,7 +8,7 @@ import userRoute from './user.route';
  * @returns router
  */
 const routes = () => {
-  router.get('/', (req, res) => {
+  router.get('/reg', (req, res) => {
     res.json('Welcome');
   });
   router.use('/users', userRoute);
