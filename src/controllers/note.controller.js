@@ -1,12 +1,12 @@
 import HttpStatus from 'http-status-codes';
-import * as UserService from '../services/user.service';
+import * as NoteService from '../services/note.service';
 
 
 
 // registration
-export const newUser = async (req, res, next) => {
+export const newNote = async (req, res, next) => {
   try {
-    const data = await UserService.get1user(req.body);
+    const data = await NoteService.getNote(req.body);
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,
@@ -19,9 +19,9 @@ export const newUser = async (req, res, next) => {
 };
 
 // login function
-export const getUser = async (req, res, next) => {
+export const getNote = async (req, res, next) => {
   try {
-    const data = await UserService.newUser(req.body);
+    const data = await NoteService.newNote(req.body);
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
         data: data,
