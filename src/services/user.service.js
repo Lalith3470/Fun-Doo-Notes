@@ -1,75 +1,28 @@
-import {log} from 'winston';
 import User from '../models/user.model';
 import bcrypt from 'bcrypt';
 
-//get all users
-export const getAllUsers = async () => {
-  const data = await User.find();
+
+
+// registration function
+export const get1user =async(body) =>{
+ 
+  body.password= await bcrypt.hash(body.password,10);
+  const data=await User.create(body);
   return data;
 };
 
-//create new user
+
+//login function
 export const newUser = async (body) => {
-  try {
-    const existingUser = await User.findOne({ email_id: body.email_id });
+    const isEmailmatch= await User.findOne({ email_id: body.email_id });
 
-    if (existingUser) {
-      const isPasswordMatch = await bcrypt.compare(body.password, existingUser.password);
-
-      if (isPasswordMatch) {
-        return "User already exists, and password matches.";
-      } else {
-        return "User already exists, but password does not match.";
-      }
-    } else {
-      const hash = await bcrypt.hash(body.password, 10);
-      body.password = hash;
-      const newUser = await User.create(body);
-      return "New user created successfully.";
+    if (isEmailmatch){
+      const isPasswordMatch = await bcrypt.compare(body.password, isEmailmatch.password);
+      if(isPasswordMatch){return("Login successful");}
+      else{throw new Error("invalid password");}
     }
-  } catch (error) {
-    return error;
-  }
-};
+    else{throw new Error("Invalid Email");} 
+  };  
 
-//update single user
-export const updateUser = async (_id, body) => {
-  const data = await User.findByIdAndUpdate(
-    {
-      _id
-    },
-    body,
-    {
-      new: true
-    }
-  );
-  return data;
-};
-
-//delete single user
-export const deleteUser = async (id) => {
-  await User.findByIdAndDelete(id);
-  return '';
-};
-
-//get single user
-export const getUser = async (body) => {
-  try {
-    const data = await User.findOne({ email_id: body.email_id });
-    if (!data) {
-      return "User not found";
-    }
-    const ismatch = await bcrypt.compare(body.password, data.password);
-    console.log(ismatch);
-
-    if (ismatch) {
-      return "Authentication Successful";
-    } else {
-      return "Authentication Failed";
-    }
-  } catch (error) {
-    return error;
-  }
-};
 
 
