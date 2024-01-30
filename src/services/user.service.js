@@ -17,13 +17,14 @@ export const newUser = async (body) => {
     const isEmailmatch= await User.findOne({ email_id: body.email_id });
     if (isEmailmatch){
       const isPasswordMatch = await bcrypt.compare(body.password, isEmailmatch.password);
-      if(isPasswordMatch){
-        var token = jwt.sign({ email_id: "qwerty@gmail.com" }, 'shhhhh');
-        return token;}
+      if (isPasswordMatch) {
+        const token = jwt.sign({ isEmailmatch: { id: isEmailmatch._id } }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        return { isEmailmatch, token };
+      }
       else{throw new Error("Invalid password");}
     }
     else{throw new Error("Invalid Email");} 
-  };  
+};  
 
 
 
