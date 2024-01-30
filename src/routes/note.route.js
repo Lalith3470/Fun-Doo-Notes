@@ -9,7 +9,12 @@ const router = express.Router();
 router.post('', newNoteValidator, noteController.newNote);
 
 //login
-router.post('/login', noteController.getNote);
+router.post('/:_id', noteController.getNote);
 
+//delete 
+router.delete("/:_id",noteController.deleteNote);
+
+//update
+router.put('/:_id', noteController.updateNote);
 
 export default router;
