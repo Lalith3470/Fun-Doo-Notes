@@ -8,14 +8,19 @@ const router = express.Router();
 // registering
 router.post('', newNoteValidator, noteController.newNote);
 
-//login
+//login Note
 router.post('/:_id', noteController.getNote);
 
-//delete 
+//delete Note
 router.delete("/:_id",noteController.deleteNote);
 
-//update
+//update Note
 router.put('/:_id', noteController.updateNote);
+
+//get all notes
+router.get('', noteController.getAllNotes);
+
+
 
 
 export default router;

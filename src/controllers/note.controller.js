@@ -39,7 +39,7 @@ export const getNote = async (req, res, next) => {
 //Delete User
 export const deleteNote = async (req, res, next) => {
   try {
-    const noteId = req.params.noteId;
+    const noteId = req.params._id;
     const data = await NoteService.deleteNoteById(noteId);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
@@ -51,15 +51,29 @@ export const deleteNote = async (req, res, next) => {
   }
 };
 
-//update note
+//update single note
 export const updateNote = async (req, res, next) => {
   try {
-    const note = req.params.noteId;
-    const data = await NoteService.updateNote(note, req.body);
+    //const note = req.params.noteId;
+    const data = await NoteService.updateNote(req.params._id, req.body);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data: data,
       message: 'Note Updated Successful',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//Get all notes
+export const getAllNotes = async (req, res, next) => {
+  try {
+    const data = await NoteService.getAllNotes();
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'All Notes fetched successfully'
     });
   } catch (error) {
     next(error);

@@ -34,3 +34,9 @@ export const updateNote = async (id, body) => {
   );
   return data;
 };
+
+//get all users
+export const getAllNotes = async () => {
+  const data = await Note.find();
+  return data;
+};

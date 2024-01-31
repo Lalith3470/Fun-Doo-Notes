@@ -14,4 +14,5 @@ router.post('/:_id', userController.getUser);
 //Authorization
 router.get('/:_id',UsingAuth, userController.getUser);
 
+
 export default router;
