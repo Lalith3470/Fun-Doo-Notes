@@ -11,8 +11,8 @@ export const newNote =async(body) =>{
 
 
 //login function
-export const getNote = async (body) => {
-    const data = await Note.findOne({ id: body.id });
+export const getNote = async (id) => {
+    const data = await Note.findById(id);
     return data;
 };  
 

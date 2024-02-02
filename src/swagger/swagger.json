@@ -1,0 +1,267 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "V1",
+      "title": "Fun Doo App",
+      "description": "CLI App API"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1/",
+    "tags": [
+      {
+        "name": "Users"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/users": {
+        "post": {
+          "tags": ["Users"],
+          "description": "create new user...",
+          "parameters": [
+            {
+              "name": "Create user",
+              "in": "body",
+              "description": "create new user needs first name, last name, email_id, password",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "New user is created"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/users/login": {
+        "post": {
+          "tags": ["Users"],
+          "description": "login to existing user.",
+          "parameters": [
+            {
+              "name": "login user",
+              "in": "body",
+              "description": "type email and password for login user",
+              "schema": {
+                "$ref": "#/definitions/loging"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "User Login Successful"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/note":{
+        "post": {
+          "tags": ["Notes"],
+          "description": "Create new note",
+          "parameters": [
+            {
+              "name": "Create Note",
+              "in": "body",
+              "description": "Type titile and description",
+              "schema": {
+                "$ref": "#/definitions/Note"
+              }              
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "New Note is created"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      },
+      "/note/{id}":{
+        "put": {
+          "tags": ["Notes"],
+          "description": "Update the existing note.",
+          "parameters": [
+            {
+              "name":"id",
+              "in" : "path",
+              "description" : "Numeric: Id required",
+              "required" : true,
+              "type" : "string"
+            },
+            {
+              "name": "Update Note",
+              "in": "body",
+              "description": "type titile and description to update note",
+              "schema": {
+                "$ref": "#/definitions/Note"
+              }              
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Note is updated"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      },
+      "/note/getNote/{id}":{
+        "get": {
+          "tags": ["Notes"],
+          "description": "Get note...",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Get note",
+              "required":true,
+              "type":"string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Note fench Successfully"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      },
+      "/note/delete/{id}":{
+        "delete": {
+          "tags": ["Notes"],
+          "description": "To Delete existing Note...",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Delete Note",
+              "required":true,
+              "type":"string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Note deleted successfully"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email_id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Note": {
+        "type" : "object",
+        "properties":{
+          "title":{
+            "type": "string"
+          },
+          "description":{
+            "type":"string"
+          }
+        }
+      },
+      "loging": {
+        "type": "object",
+        "properties": {
+          "email_id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "loginNote": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "JWT": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+    
+}

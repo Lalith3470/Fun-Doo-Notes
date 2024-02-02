@@ -2,7 +2,6 @@ import HttpStatus from 'http-status-codes';
 import * as UserService from '../services/user.service';
 
 
-
 // registration
 export const newUser = async (req, res, next) => {
   try {
@@ -29,6 +28,21 @@ export const getUser = async (req, res, next) => {
       });
     }
   catch (error) {
+    next(error);
+  }
+};
+
+
+//delete Function
+export const deleteuser = async (req, res, next) => {
+  try {
+    const data = await UserService.deleteUserById(req.params._id);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'User delete successfull',
+    });
+  } catch (error) {
     next(error);
   }
 };

@@ -26,4 +26,9 @@ export const newUser = async (body) => {
     else{throw new Error("Invalid Email");} 
 };  
 
+//delete User
+export const deleteUserById = async (id) => {
+  await User.findByIdAndDelete(id);
+  return id;
+};
 

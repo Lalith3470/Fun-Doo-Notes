@@ -14,7 +14,7 @@ const routes = () => {
     res.json('Welcome');
   });
   router.use('/users', userRoute);
-  router.use('/note', UsingAuth,noteRoute);
+  router.use('/note',noteRoute);
 
   return router;
 };

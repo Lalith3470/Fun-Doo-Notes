@@ -9,10 +9,12 @@ const router = express.Router();
 router.post('', newUserValidator, userController.newUser);
 
 //login
-router.post('/:_id', userController.getUser);
+router.post('/login', userController.getUser);
 
 //Authorization
 router.get('/:_id',UsingAuth, userController.getUser);
 
+//delete
+router.delete("/:_id", userController.deleteuser);
 
 export default router;

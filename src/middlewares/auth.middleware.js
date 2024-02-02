@@ -14,6 +14,7 @@ export const UsingAuth = async (req, res, next) => {
     let bearerToken = req.header('Authorization');
     if (bearerToken){
       bearerToken = bearerToken.split(' ')[1];
+      const user  = await jwt.verify(bearerToken, process.env.JWT_SECRET);
     }
     else{
       throw {
