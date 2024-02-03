@@ -202,6 +202,25 @@
             }
           ]
         }
+      },
+      "/note/getAll":{
+        "get": {
+          "tags": ["Notes"],
+          "description": "To Get All Notes...",
+          "responses": {
+            "201": {
+              "description": "Notes fetch Successfully"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
       }
     },
     "definitions": {

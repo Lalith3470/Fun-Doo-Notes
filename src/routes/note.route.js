@@ -18,7 +18,7 @@ router.delete("/delete/:_id",UsingAuth,noteController.deleteNote);
 router.put('/:_id',UsingAuth, noteController.updateNote);
 
 //get all notes
-router.get('/getAllNotes', UsingAuth,noteController.getAllNotes);
+router.get('/getAll', UsingAuth,noteController.getAllNotes);
 
 
 export default router;
